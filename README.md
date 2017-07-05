@@ -1,5 +1,5 @@
 
-<h2>[Pan](https://pt.wikipedia.org/wiki/Pandora)[load](https://pt.wikipedia.org/wiki/Load)<h2>
+[Pan](https://pt.wikipedia.org/wiki/Pandora)[load](https://pt.wikipedia.org/wiki/Load)
 
 ![Panload](http://i.imgur.com/Ys0GJtw.png "Panload")
 
