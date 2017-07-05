@@ -1,6 +1,8 @@
 
 # -*- coding: utf-8 -*-
 
+import os
+
 import sys
 
 import requests
@@ -10,9 +12,15 @@ import subprocess
 
 def clear () :
 
-    # Stackoverflow.com/questions/16242025/term-environment-variable-not-set
+    '''
 
-    subprocess.call ( 'clear', shell = True )
+        Stackoverflow.com/questions/16242025/term-environment-variable-not-set
+
+        Subprocess.call ( 'clear', shell = True )
+
+    '''
+
+    os.system ( 'clear' )
 
 
 class Archive ( object ) :
@@ -80,7 +88,7 @@ while True :
 
     except Exception as Error :
 
-        raise Exception ( 'Try Again'.format ( Error ) )
+        raise Exception ( '{0} - Try Again'.format ( Error ) )
 
 
     if choose == 1 :
@@ -133,7 +141,3 @@ while True :
         clear ()
 
         sys.exit (0)
-
-    else :
-
-        continue
