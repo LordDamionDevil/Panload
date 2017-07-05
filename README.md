@@ -1,16 +1,16 @@
 
 [Pan](https://pt.wikipedia.org/wiki/Pandora)[load](https://pt.wikipedia.org/wiki/Load)
 
-![Panload](http://i.imgur.com/Ys0GJtw.png "Panload")
+![Panload](http://i.imgur.com/oirUiHl.png "Panload")
 
 Aplicação [Cli](https://en.wikipedia.org/wiki/Command-line_interface) em [Python](https://www.python.org/) que realiza o download de arquivos de diversas extensões além de realizar o download de um vídeo e áudio e concatenar os mesmos. :milky_way:
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fe23c85d12144fef9588b09bc082c434)](https://www.codacy.com/app/Sphinxs/Panload?utm_source=github.com&utm_medium=referral&utm_content=Sphinxs/Panload&utm_campaign=badger)
 
 
 #### Dependências
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fe23c85d12144fef9588b09bc082c434)](https://www.codacy.com/app/Sphinxs/Panload?utm_source=github.com&utm_medium=referral&utm_content=Sphinxs/Panload&utm_campaign=badger)
-
-As libs [os](https://docs.python.org/3.7/library/os.html) e [sys](https://docs.python.org/3.7/library/sys.html) por padrão vem no interpretador Python ( Built-in ), além destas duas libs são requeridas : ( Instalação com preferência em Python 3 ou seja `pip3 install ...` )
+A lib [sys](https://docs.python.org/3.7/library/sys.html) por padrão vem no interpretador Python ( Built-in ), além desta lib são requeridas : ( Instalação com preferência em Python 3 ou seja `pip3 install ...` )
 
 [Sub Process](https://docs.python.org/3.7/library/subprocess.html)
 
@@ -18,7 +18,7 @@ As libs [os](https://docs.python.org/3.7/library/os.html) e [sys](https://docs.p
 
 [Requests](http://docs.python-requests.org/en/master/)
 
-Também é necessário instalar o [FFmpe](https://ffmpeg.org/) caso você deseje concatenar vídeo e áudio, o mesmo tem um guia de instalação para Mac, Windows & Linux nesta página **[aqui](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)**.
+Também é necessário instalar o [Ffmpe](https://ffmpeg.org/) caso você deseje concatenar vídeo e áudio, o mesmo tem um guia de instalação para Mac, Windows & Linux nesta página **[aqui](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)**.
 
 > Player : [Vlc Player](http://www.videolan.org/)
 
@@ -34,13 +34,13 @@ A principal motivação e uso desta aplicação se faz presente pelo site [Coub]
 
 #### Issues
 
-* Inferência na obtenção das url's de sites como [Sound Cloud](https://soundcloud.com/), [Youtube](https://www.youtube.com/) & [Coub](http://coub.com/explore/hot)
+* Inferência na obtenção das urls de sites como [Sound Cloud](https://soundcloud.com/), [Youtube](https://www.youtube.com/) & [Coub](http://coub.com/explore/hot)
 
 * Verificação de arquivos locais na concatenação
 
 * Escolha de diretório
 
-* Compressor para os arquivos
+* Compressor
 
 * Implementação de Gui
 
