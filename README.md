@@ -8,6 +8,8 @@ Aplicação [Cli](https://en.wikipedia.org/wiki/Command-line_interface) em [Pyth
 
 #### Dependências
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fe23c85d12144fef9588b09bc082c434)](https://www.codacy.com/app/Sphinxs/Panload?utm_source=github.com&utm_medium=referral&utm_content=Sphinxs/Panload&utm_campaign=badger)
+
 As libs [os](https://docs.python.org/3.7/library/os.html) e [sys](https://docs.python.org/3.7/library/sys.html) por padrão vem no interpretador Python ( Built-in ), além destas duas libs são requeridas : ( Instalação com preferência em Python 3 ou seja `pip3 install ...` )
 
 [Sub Process](https://docs.python.org/3.7/library/subprocess.html)
