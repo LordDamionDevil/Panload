@@ -21,11 +21,8 @@ class Archive ( object ) :
 
         pass
 
-    # Name, Url, Extension
 
     def download ( self, name = None, url = None, ext = None ) :
-
-        ''' Panload.download ( 'Wallpaper', 'i.imgur.com/csDLxo9.jpg', 'jpg' ) '''
 
         if name == None or url == None or ext == None :
 
@@ -48,16 +45,12 @@ class Archive ( object ) :
             for chunk in requ.iter_content ( chunk_size = 255 ) :
 
                 if chunk :
-
                     arch.write ( chunk )
 
         print ( '\n\nDownload done - {0}\n'.format (name) )
 
-    # V = Video, A = Audio & F = Final
 
     def combine ( self, vname, vurl, vext, aname, aurl, aext, fname, fext ) :
-
-        ''' Panload.combine ( 'Vid', 'bit.ly/2so2bjW', 'mp4', 'Aud', 'bit.ly/2tKdLt6', 'mp3', 'Anime', 'mp4' ) '''
 
         self.download ( vname, vurl, vext )
 
@@ -77,9 +70,7 @@ Panload = Archive ()
 
 while True :
 
-    clear ()
-
-    print ( '\nMenu :\n\n\t1 - Download\n\n\t2 - Concatenação\n')
+    clear (); print ( '\nMenu :\n\n\t1 - Download\n\n\t2 - Concatenação\n')
 
     choose = 0
 
@@ -91,11 +82,10 @@ while True :
 
         raise Exception ( 'Try Again'.format ( Error ) )
 
+
     if choose == 1 :
 
-        clear ()
-
-        print ( '\nDownload :')
+        clear (); print ( '\nDownload :')
 
         dnome = input ( '\n\tInforme um nome para o arquivo : ' )
 
@@ -103,13 +93,12 @@ while True :
 
         dext = input ( '\n\tInforme a extensão do arquivo : ')
 
+
         Panload.download ( dnome, durl, dext )
 
     elif choose == 2 :
 
-        clear ()
-
-        print ( '\nConcatenação :')
+        clear (); print ( '\nConcatenação :')
 
         vnome = input ( u'\n\tInforme um nome para o vídeo : ' )
 
@@ -117,11 +106,13 @@ while True :
 
         vext = input ( u'\n\tInforme a extensão do vídeo : ' )
 
+
         aname  = input ( u'\n\n\tInforme um nome para o áudio : ' )
 
         aurl = input ( u'\n\tInforme a url do áudio : ' )
 
         aext = input ( u'\n\tInforme a extensão áudio : ' )
+
 
         fname = input ( u'\n\n\tInforme o nome do arquivo final : ' )
 
@@ -134,6 +125,7 @@ while True :
 
         print ( '\nOpção invalida' )
 
+
     out = input ( '\nDigite 0 para sair ou outro digito para continuar : ' )
 
     if ( out == '0' ) :
@@ -143,7 +135,5 @@ while True :
         sys.exit (0)
 
     else :
-
-        clear ()
 
         continue
