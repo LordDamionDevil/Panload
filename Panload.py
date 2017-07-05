@@ -1,8 +1,6 @@
 
 # -*- coding: utf-8 -*-
 
-import os
-
 import sys
 
 import requests
@@ -89,9 +87,9 @@ while True :
 
         choose = int ( input ( 'Informe sua escolha : ' ) )
 
-    except :
+    except Exception as Error :
 
-        continue
+        raise Exception ( 'Try Again'.format ( Error ) )
 
     if choose == 1 :
 
