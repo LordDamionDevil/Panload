@@ -7,7 +7,7 @@ import sys
 
 import requests
 
-import subprocess
+from subprocess import call
 
 
 def clear () :
@@ -16,7 +16,7 @@ def clear () :
 
         Stackoverflow.com/questions/16242025/term-environment-variable-not-set
 
-        Subprocess.call ( 'clear', shell = True )
+        call ( 'clear', shell = True )
 
     '''
 
@@ -60,13 +60,17 @@ class Archive ( object ) :
 
     def combine ( self, vname, vurl, vext, aname, aurl, aext, fname, fext ) :
 
+        print ( '\nBaixando ...' )
+
         self.download ( vname, vurl, vext )
 
         self.download ( aname, aurl, aext )
 
-        comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -vcodec copy -acodec copy {4}.{5} && rm -rf {0}.{1} {2}.{3}'.format ( vname, vext, aname, aext, fname, fext )
+        # comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -vcodec copy -acodec copy {4}.{5} && rm -rf {0}.{1} {2}.{3}'.format ( vname, vext, aname, aext, fname, fext )
 
-        subprocess.call ( comand, shell = True )
+        comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -c:v copy -c:a aac -map 0:0 -map 1:0 -shortest {4}.{5} && rm -rf {0}.{1} {2}.{3}'.format ( vname, vext, aname, aext, fname, fext )
+
+        call ( comand, shell = True )
 
         clear ()
 
@@ -114,6 +118,7 @@ while True :
 
         vext = input ( u'\n\tInforme a extensão do vídeo : ' )
 
+        clear (); print ( '\nConcatenação :')
 
         aname  = input ( u'\n\n\tInforme um nome para o áudio : ' )
 
@@ -121,11 +126,13 @@ while True :
 
         aext = input ( u'\n\tInforme a extensão áudio : ' )
 
+        clear (); print ( '\nConcatenação :')
 
         fname = input ( u'\n\n\tInforme o nome do arquivo final : ' )
 
         fext = input ( u'\n\tInforme a extensão do arquivo final : ' )
 
+        clear ()
 
         Panload.combine ( vnome, vurl, vext, aname, aurl, aext, fname, fext )
 
