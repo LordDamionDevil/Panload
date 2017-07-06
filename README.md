@@ -1,40 +1,44 @@
 
-[Pan](https://pt.wikipedia.org/wiki/Pandora)[load](https://pt.wikipedia.org/wiki/Load)
+[Pan](https://pt.wikipedia.org/wiki/Pandora)[load](https://en.wikipedia.org/wiki/Load_testing)
 
 ![Panload](http://i.imgur.com/oirUiHl.png "Panload")
 
-Aplicação [Cli](https://en.wikipedia.org/wiki/Command-line_interface) em [Python](https://www.python.org/) que realiza o download de arquivos de diversas extensões além de realizar o download de um vídeo e áudio e concatenar os mesmos. :milky_way:
+Aplicação [Cli](https://en.wikipedia.org/wiki/Command-line_interface) em [Python 3](https://www.python.org/) que realiza o download de arquivos de diversas extensões, o download de um vídeo + áudio e concatena os mesmos, além de realizar o download de vídeos do site [Coub](http://coub.com/explore/hot). :milky_way:
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fe23c85d12144fef9588b09bc082c434)](https://www.codacy.com/app/Sphinxs/Panload?utm_source=github.com&utm_medium=referral&utm_content=Sphinxs/Panload&utm_campaign=badger)
 
 
 #### Dependências
 
-A lib [sys](https://docs.python.org/3.7/library/sys.html) por padrão vem no interpretador Python ( Built-in ), além desta lib são requeridas : ( Instalação com preferência em Python 3 ou seja `pip3 install ...` )
+As libs [os](https://docs.python.org/3.7/library/os.html) e [sys](https://docs.python.org/3.7/library/sys.html) por padrão vem no interpretador Python ( Built-in ), além destas libs são requeridas : ( Python 3 ou seja `pip3 install ...` )
 
-[Sub Process](https://docs.python.org/3.7/library/subprocess.html)
+* [Json](https://docs.python.org/3.7/library/json.html)
 
-&
+* [Sub Process](https://docs.python.org/3.7/library/subprocess.html)
 
-[Requests](http://docs.python-requests.org/en/master/)
+* [Requests](http://docs.python-requests.org/en/master/)
 
-Também é necessário instalar o [Ffmpe](https://ffmpeg.org/) caso você deseje concatenar vídeo e áudio, o mesmo tem um guia de instalação para Mac, Windows & Linux nesta página **[aqui](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)**.
+* [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup/)
+
+Também é necessário instalar o [FFmpeg](https://ffmpeg.org/) caso você deseje concatenar um vídeo e um áudio, o mesmo tem um guia de instalação para Mac, Windows & Linux nesta página **[aqui](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)**.
 
 > Player : [Vlc Player](http://www.videolan.org/)
 
+<a href = '#Exc' ></a>
+
 #### Execução
 
-A execução se da de forma simples, basta realizar o `git clone` deste repositório, acessar o mesmo `cd Panload` e interpretar o arquivo `Panload.py` de preferência em `python3 Panload.py`. Os arquivos baixados serão salvos no diretório atual em que o arquivo `Panload.py` se encontra, vale avisar que caso você tenha realizado o download de um áudio com nome 'x' ou um vídeo com nome ' y ' ( Ou ambos ) e realize a e concatenação de um vídeo + áudio com o mesmo nome dos arquivos já baixados a exclusão de ' x ' e ' y ' vai ser realizada. Para desativar a exclusão edite a linha `68` removendo o seguinte trecho de código : `&& rm -rf {0}.{1} {2}.{3}`.
+A execução se da de forma simples, basta realizar o `git clone` deste repositório, acessar o mesmo `cd Panload` e interpretar o arquivo `Panload.py` ( `python3 Panload.py` ). Os arquivos baixados serão salvos no diretório atual em que o arquivo `Panload.py` se encontra, vale avisar que caso você tenha realizado o download de um áudio com nome 'x' ou de um vídeo com nome ' y ' ( Ou ambos ) e realize a e concatenação de um vídeo + áudio com o mesmo nome e extensão dos arquivos já baixados a exclusão de ' x ' e ' y ' vai ser realizada. Para desativar a exclusão edite a linha `69` removendo o seguinte trecho de código : `&& rm -rf {0}.{1} {2}.{3}`.
 
 #### Motivação
 
-A principal motivação e uso desta aplicação se faz presente pelo site [Coub](http://coub.com/explore/hot) que tem uma falta imensa de opções ( Que funcionem ) para realizar o download de vídeos / áudios da plataforma, então caso deseje realizar o download de um ' Coub ' acesse a página do mesmo e pressione `ctrl + u`, `ctrl + f` e digite **mp3** para encontrar o link do áudio ou **mp4** para encontrar o link do vídeo, então copie tal link e cole o mesmo na linha de comando desta aplicação ( *Panload* ). - Ps : O download de qualquer arquivo por parte dessa aplicação ( Até o momento ) necessita que a extensão de tal arquivo esteja implícita em sua [Uri](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) ( Url ) !
+A principal motivação e uso desta aplicação se faz presente pelo site [Coub](http://coub.com/explore/hot) que tem uma falta imensa de opções ( Que funcionem ) para realizar o download de vídeos / áudios da plataforma, então caso deseje realizar o download de um ' Coub ' acesse a página do vídeo em questão e copie sua [Uri](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) ( Url ), logo após faça os paços de interpretação do arquivo `Panload.py` como já explicado <a name='Exc'>acima</a> e selecione a opção `3`, insira a url + nome para o arquivo e a extensão que deseja salvar o mesmo.
 
-![Coub Download](http://i.imgur.com/JVvukrY.png "Download And Save Coub Videos")
+![Coub Download](http://i.imgur.com/S9vDpox.png "Download And Save Coub Videos")
 
 #### Issues
 
-* Inferência na obtenção das urls de sites como [Sound Cloud](https://soundcloud.com/), [Youtube](https://www.youtube.com/) & [Coub](http://coub.com/explore/hot)
+* Inferência na obtenção das urls de sites como [Sound Cloud](https://soundcloud.com/) & [Youtube](https://www.youtube.com/)
 
 * Verificação de arquivos locais na concatenação
 
@@ -44,8 +48,12 @@ A principal motivação e uso desta aplicação se faz presente pelo site [Coub]
 
 * Implementação de Gui
 
+* Lista de arquivos disponíveis para download / concatenação
+
 #### Tratar
 
 * Parâmetros errados
 
 * Padronização do idioma ( Inglês )
+
+* Segurança da call
