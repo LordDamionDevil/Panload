@@ -1,22 +1,20 @@
 
 # -*- coding: utf-8 -*-
 
-import os
-
-import sys
-
-import json
-
 import requests
 
-from subprocess import call
+from sys import exit
+
+from os import system
+
+from json import loads
+
+from subprocess import Popen
 
 from bs4 import BeautifulSoup
 
 
 def info () :
-
-    bank = []
 
     tpn = input ( u'\n\n\tNome para o arquivo : ' )
 
@@ -24,18 +22,12 @@ def info () :
 
     tpe = input ( u'\n\tExtensão do arquivo : ' )
 
-    bank.append ( tpn )
-
-    bank.append ( tpu )
-
-    bank.append ( tpe )
-
-    return bank
+    return [ tpn, tpu, tpe ]
 
 
 def clear () :
 
-    os.system ( 'clear || cls' )
+    system ( 'clear || cls' )
 
 
 class Archive :
@@ -47,13 +39,13 @@ class Archive :
 
     def download ( self, name = None, url = None, ext = None ) :
 
-        if ( name == None or url == None or ext == None ) :
+        if name == None or url == None or ext == None :
 
             clear ()
 
             print ( u'\nError Download - Parameters\n' )
 
-            sys.exit ( 1 )
+            exit ( 1 )
 
         self.__name = name
 
@@ -72,7 +64,7 @@ class Archive :
                 if chunk :
                     archive.write ( chunk )
 
-        print ( '\n\n\tDone - {0}\n'.format ( str ( name ) ) )
+        print ( '\n\n\tDone - {0}\n'.format ( name ) )
 
 
     def combine ( self, vn, vu, ve, an, au, ae, fn, fe ) :
@@ -85,7 +77,7 @@ class Archive :
 
         self.__comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -c:v copy -c:a aac -map 0:0 -map 1:0 -shortest {4}.{5} && rm -rf {0}.{1} {2}.{3}'.format ( vn, ve, an, ae, fn, fe )
 
-        call ( self.__comand, shell = True )
+        Popen ( self.__comand, shell = True )
 
         clear ()
 
@@ -108,7 +100,7 @@ class Archive :
 
         self.__soup = str ( self.__soup.find ( id = 'coubPageCoubJson' ) ) [47:-9]
 
-        self.__soup = json.loads ( self.__soup )
+        self.__soup = loads ( self.__soup )
 
         # -
 
@@ -117,6 +109,8 @@ class Archive :
         self.__mp3 = str ( self.__soup['file_versions']['html5']['audio']['high']['url'] )
 
         self.combine ( 'Vd', self.__mp4, 'mp4', 'Ad', self.__mp3, 'mp3', self.__cname, self.__cext )
+
+        clear ()
 
 
 Panload = Archive ()
@@ -130,22 +124,19 @@ while True :
 
     clear ();
 
-
     print ( '\nMenu :\n\n\t1 - Download\n\n\t2 - Concatenação\n\n\t3 - Download Coub\n' )
 
     choose = input ( u'Escolha : ' )
-
 
     if choose in off :
 
         clear ()
 
-        sys.exit ( 0 )
+        exit ( 0 )
 
     elif choose == '1' :
 
         clear ();
-
 
         print ( '\nDown :')
 
@@ -156,7 +147,6 @@ while True :
     elif choose == '2' :
 
         clear ();
-
 
         print ( '\nUnião : ' )
 
@@ -186,7 +176,6 @@ while True :
 
         fe = input ( u'\n\n\tExtensão para o arquivo convertido : ' )
 
-
         clear ()
 
         Panload.combine ( vn, vu, ve, an, au, ae, fn, fe )
@@ -194,7 +183,6 @@ while True :
     elif choose == '3' :
 
         clear ()
-
 
         print ( '\nCoub : ' )
 
@@ -206,11 +194,10 @@ while True :
 
         print ( '\nOpção invalida' )
 
-
     out = input ( u'\nZero para sair, outro digito para continuar : ' )
 
     if ( out in off ) :
 
         clear ()
 
-        sys.exit ( 0 )
+        exit ( 0 )
