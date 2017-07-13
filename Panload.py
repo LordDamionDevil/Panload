@@ -1,17 +1,15 @@
 
 # -*- coding: utf-8 -*-
 
-import requests
+import os
 
-from os import system
+import requests
 
 from json import loads
 
 from subprocess import Popen
 
 from bs4 import BeautifulSoup
-
-__doc__ = 'Panload - Github.com/Sphinxs'
 
 
 def info () :
@@ -27,7 +25,7 @@ def info () :
 
 def clear () :
 
-    system ( 'clear || cls' )
+    os.system ( 'cls' if os.name == 'nt' else 'clear' )
 
 
 class Archive :
@@ -73,9 +71,9 @@ class Archive :
 
         self.download ( an, au, ae )
 
-        self.__comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -c:v copy -c:a aac -map 0:0 -map 1:0 -shortest {4}.{5} && rm -rf {0}.{1} {2}.{3}'.format ( vn, ve, an, ae, fn, fe )
+        self.__comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -c:v copy -c:a aac -map 0:0 -map 1:0 -shortest {4}.{5}'.format ( vn, ve, an, ae, fn, fe )
 
-        Popen ( self.__comand, shell = True )
+        Popen ( self.__comand.split (' ') )
 
         clear ()
 
