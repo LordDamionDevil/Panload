@@ -3,8 +3,6 @@
 
 import requests
 
-from sys import exit
-
 from os import system
 
 from json import loads
@@ -13,16 +11,18 @@ from subprocess import Popen
 
 from bs4 import BeautifulSoup
 
+__doc__ = 'Panload - Github.com/Sphinxs'
+
 
 def info () :
 
-    tpn = input ( u'\n\n\tNome para o arquivo : ' )
+    infon = input ( u'\n\n\tNome para o arquivo : ' )
 
-    tpu = input ( u'\n\tUrl : ' )
+    infou = input ( u'\n\tUrl : ' )
 
-    tpe = input ( u'\n\tExtensão do arquivo : ' )
+    infoe = input ( u'\n\tExtensão do arquivo : ' )
 
-    return [ tpn, tpu, tpe ]
+    return [ infon, infou, infoe ]
 
 
 def clear () :
@@ -35,7 +35,6 @@ class Archive :
     def __init__ ( self ) :
 
         pass
-
 
     def download ( self, name = None, url = None, ext = None ) :
 
@@ -66,7 +65,6 @@ class Archive :
 
         print ( '\n\n\tDone - {0}\n'.format ( name ) )
 
-
     def combine ( self, vn, vu, ve, an, au, ae, fn, fe ) :
 
         print ( '\nLoading ...', end = '\n' )
@@ -83,7 +81,6 @@ class Archive :
 
         print ( '\n\nFile :\n\n\tDone - {0}\n'.format ( fn ) )
 
-
     def coub ( self, cn = None, cu = None, ce = None ) :
 
         self.__cname = cn
@@ -96,9 +93,7 @@ class Archive :
 
         self.__coub = requests.get ( self.__curl ).text
 
-        self.__soup = BeautifulSoup ( self.__coub, 'html.parser' )
-
-        self.__soup = str ( self.__soup.find ( id = 'coubPageCoubJson' ) ) [47:-9]
+        self.__soup = str ( BeautifulSoup ( self.__coub, 'html.parser' ).find ( id = 'coubPageCoubJson' ) ) [47:-9]
 
         self.__soup = loads ( self.__soup )
 
@@ -108,9 +103,7 @@ class Archive :
 
         self.__mp3 = str ( self.__soup['file_versions']['html5']['audio']['high']['url'] )
 
-        self.combine ( 'Vd', self.__mp4, 'mp4', 'Ad', self.__mp3, 'mp3', self.__cname, self.__cext )
-
-        clear ()
+        self.combine ( 'Video', self.__mp4, 'mp4', 'Audio', self.__mp3, 'mp3', self.__cname, self.__cext )
 
 
 Panload = Archive ()
@@ -156,7 +149,6 @@ while True :
 
         ve = input ( u'\n\n\tExtensão do vídeo : ' )
 
-
         clear ();
 
         print ( '\nUnião : ' )
@@ -166,7 +158,6 @@ while True :
         au = input ( u'\n\n\tUrl : ' )
 
         ae = input ( u'\n\n\tExtensão áudio : ' )
-
 
         clear ();
 
@@ -196,7 +187,7 @@ while True :
 
     out = input ( u'\nZero para sair, outro digito para continuar : ' )
 
-    if ( out in off ) :
+    if out in off :
 
         clear ()
 
