@@ -5,9 +5,9 @@ import os
 
 import requests
 
-from json import loads
+import subprocess
 
-from subprocess import Popen
+from json import loads
 
 from bs4 import BeautifulSoup
 
@@ -73,9 +73,7 @@ class Archive :
 
         self.__comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -c:v copy -c:a aac -map 0:0 -map 1:0 -shortest {4}.{5}'.format ( vn, ve, an, ae, fn, fe )
 
-        Popen ( self.__comand.split (' ') )
-
-        clear ()
+        subprocess.Popen ( self.__comand.split (' '), shell = False )
 
         print ( '\n\nFile :\n\n\tDone - {0}\n'.format ( fn ) )
 
