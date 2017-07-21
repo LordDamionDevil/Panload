@@ -14,11 +14,11 @@ from bs4 import BeautifulSoup
 
 def info () :
 
-    infon = input ( u'\n\n\tNome para o arquivo : ' )
+    infon = input ( '\n\n\tNome para o arquivo : ' )
 
-    infou = input ( u'\n\tUrl : ' )
+    infou = input ( '\n\tUrl : ' )
 
-    infoe = input ( u'\n\tExtensão do arquivo : ' )
+    infoe = input ( '\n\tExtensão do arquivo : ' )
 
     return [ infon, infou, infoe ]
 
@@ -40,7 +40,7 @@ class Archive :
 
             clear ()
 
-            print ( u'\nError Download - Parameters\n' )
+            print ( '\nError Download - Parameters\n' )
 
             exit ( 1 )
 
@@ -109,82 +109,84 @@ choose = '0'
 
 off = [ '00000000', '0', 'Zero', 'zero' ]
 
-while True :
+if __name__ == '__main__' :
 
-    clear ();
-
-    print ( '\nMenu :\n\n\t1 - Download\n\n\t2 - Concatenação\n\n\t3 - Download Coub\n' )
-
-    choose = input ( u'Escolha : ' )
-
-    if choose in off :
-
-        clear ()
-
-        exit ( 0 )
-
-    elif choose == '1' :
+    while True :
 
         clear ();
 
-        print ( '\nDown :')
+        print ( '\nMenu :\n\n\t1 - Download\n\n\t2 - Concatenação\n\n\t3 - Download Coub\n' )
 
-        bank = info ()
+        choose = input ( 'Escolha : ' )
 
-        Panload.download ( * bank )
+        if choose in off :
 
-    elif choose == '2' :
+            clear ()
 
-        clear ();
+            exit ( 0 )
 
-        print ( '\nUnião : ' )
+        elif choose == '1' :
 
-        vn = input ( u'\n\n\tNome para o vídeo : ' )
+            clear ();
 
-        vu = input ( u'\n\n\tUrl : ' )
+            print ( '\nDown :')
 
-        ve = input ( u'\n\n\tExtensão do vídeo : ' )
+            bank = info ()
 
-        clear ();
+            Panload.download ( * bank )
 
-        print ( '\nUnião : ' )
+        elif choose == '2' :
 
-        an  = input ( u'\n\n\tNome para o áudio : ' )
+            clear ();
 
-        au = input ( u'\n\n\tUrl : ' )
+            print ( '\nUnião : ' )
 
-        ae = input ( u'\n\n\tExtensão áudio : ' )
+            vn = input ( '\n\n\tNome para o vídeo : ' )
 
-        clear ();
+            vu = input ( '\n\n\tUrl : ' )
 
-        print ( '\nUnião : ' )
+            ve = input ( '\n\n\tExtensão do vídeo : ' )
 
-        fn = input ( u'\n\n\tNome para o arquivo convertido : ' )
+            clear ();
 
-        fe = input ( u'\n\n\tExtensão para o arquivo convertido : ' )
+            print ( '\nUnião : ' )
 
-        clear ()
+            an  = input ( '\n\n\tNome para o áudio : ' )
 
-        Panload.combine ( vn, vu, ve, an, au, ae, fn, fe )
+            au = input ( '\n\n\tUrl : ' )
 
-    elif choose == '3' :
+            ae = input ( '\n\n\tExtensão áudio : ' )
 
-        clear ()
+            clear ();
 
-        print ( '\nCoub : ' )
+            print ( '\nUnião : ' )
 
-        bank_coub = info ()
+            fn = input ( '\n\n\tNome para o arquivo convertido : ' )
 
-        Panload.coub ( * bank_coub )
+            fe = input ( '\n\n\tExtensão para o arquivo convertido : ' )
 
-    else :
+            clear ()
 
-        print ( '\nOpção invalida' )
+            Panload.combine ( vn, vu, ve, an, au, ae, fn, fe )
 
-    out = input ( u'\nZero para sair, outro digito para continuar : ' )
+        elif choose == '3' :
 
-    if out in off :
+            clear ()
 
-        clear ()
+            print ( '\nCoub : ' )
 
-        exit ( 0 )
+            bank_coub = info ()
+
+            Panload.coub ( * bank_coub )
+
+        else :
+
+            print ( '\nOpção invalida' )
+
+        out = input ( '\nZero para sair, outro digito para continuar : ' )
+
+        if out in off :
+
+            clear ()
+
+            exit ( 0 )
