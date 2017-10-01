@@ -1,5 +1,5 @@
 
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import os
 
@@ -12,15 +12,18 @@ from json import loads
 from bs4 import BeautifulSoup
 
 
+colours = { 'red': '\033[31m', 'blue': '\033[34m', 'blank': '\033[37m' }
+
+
 def info () :
 
-    infon = input ( '\n\n\tNome para o arquivo : ' )
+    info_n = input ( '\n\n\tNome do arquivo : ' )
 
-    infou = input ( '\n\tUrl : ' )
+    info_e = input ( '\n\tExtensão do arquivo : ' )
 
-    infoe = input ( '\n\tExtensão do arquivo : ' )
+    info_u = input ( '\n\tUrl : ' )
 
-    return [ infon, infou, infoe ]
+    return [ info_n, info_u, info_e ]
 
 
 def clear () :
@@ -30,27 +33,13 @@ def clear () :
 
 class Archive :
 
-    def __init__ ( self ) :
-
-        pass
-
     def download ( self, name = None, url = None, ext = None ) :
-
-        if name == None or url == None or ext == None :
-
-            clear ()
-
-            print ( '\nError Download - Parameters\n' )
-
-            exit ( 1 )
 
         self.__name = name
 
         self.__url = url if url.startswith ( 'https://' ) or url.startswith ( 'http://' ) else 'http://' + url
 
         self.__ext = ext if ext.startswith ( '.' ) else '.' + ext
-
-        # -
 
         request = requests.get ( self.__url )
 
@@ -61,11 +50,11 @@ class Archive :
                 if chunk :
                     archive.write ( chunk )
 
-        print ( '\n\n\tDone - {0}\n'.format ( name ) )
+        print ( '\n\n\t{1}Done{2} - {0}\n'.format ( name, colours['red'], colours['blank'] ) )
 
     def combine ( self, vn, vu, ve, an, au, ae, fn, fe ) :
 
-        print ( '\nLoading ...', end = '\n' )
+        print ( '\nLoading {0}...{1}\n'.format ( colours['blue'], colours['blank'] ) )
 
         self.download ( vn, vu, ve )
 
@@ -75,7 +64,7 @@ class Archive :
 
         subprocess.Popen ( self.__comand.split (' '), shell = False )
 
-        print ( '\n\nFile :\n\n\tDone - {0}\n'.format ( fn ) )
+        print ( '\n\nFile :\n\n\t{1}Done{2} - {0}\n'.format ( fn, colours['red'], colours['blank'] ) )
 
     def coub ( self, cn = None, cu = None, ce = None ) :
 
@@ -89,15 +78,17 @@ class Archive :
 
         self.__coub = requests.get ( self.__curl ).text
 
-        self.__soup = str ( BeautifulSoup ( self.__coub, 'html.parser' ).find ( id = 'coubPageCoubJson' ) ) [47:-9]
+        self.__soup = BeautifulSoup ( self.__coub, 'html.parser' )
+        
+        self.__soup = str ( self.__soup.find ( id = 'coubPageCoubJson' ) ) [47:-9]
 
         self.__soup = loads ( self.__soup )
 
         # -
 
-        self.__mp4 = str ( self.__soup['file_versions']['html5']['video']['med']['url'] )
+        self.__mp4 = str ( self.__soup['file_versions']['html5']['video']['med']['url'][2:] )
 
-        self.__mp3 = str ( self.__soup['file_versions']['html5']['audio']['high']['url'] )
+        self.__mp3 = str ( self.__soup['file_versions']['html5']['audio']['med']['url'] )
 
         self.combine ( 'Video', self.__mp4, 'mp4', 'Audio', self.__mp3, 'mp3', self.__cname, self.__cext )
 
