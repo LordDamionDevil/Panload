@@ -6,7 +6,7 @@ import os, inspect
 
 from requests import get
 
-from subprocess import Popen
+from subprocess import call, Popen # Mono & Multi
 
 from time import sleep
 
@@ -70,13 +70,15 @@ class Coub:
 
         sleep(5)
 
-        Popen(['convert {1}/Gif* {1}/Video.mp4 && mencoder {1}/Video.mp4 -audiofile {1}/Audio.mp3 -oac copy -ovc copy -o {0}.mp4'.format(self.__data[0], os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))], shell = True)
+        call(['convert {1}/Gif* {1}/Video.mp4 && mencoder {1}/Video.mp4 -audiofile {1}/Audio.mp3 -oac copy -ovc copy -o {0}.mp4'.format(self.__data[0], os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))], shell = True)
 
-        sleep(15)
+        sleep(5)
 
         Popen(['rm -rf Gif* Video.mp4 Audio.mp3'], shell=True)
 
         screen()
+
+        print('\n{0}Finished{1}\n'.format('\033[32m', '\033[37m'))
 
 
 if __name__ == '__main__':
@@ -100,6 +102,6 @@ if __name__ == '__main__':
 
             print('\n{0}Invalid{1} url {0}!{1}'.format('\033[31m','\033[37m'))
 
-    print('\n{0}Connecting{1} ...\n'.format('\033[32m','\033[37m'))
+    print('\n{0}Connecting{1} ...\n'.format('\033[33m','\033[37m'))
 
     Coub(user)
