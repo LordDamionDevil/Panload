@@ -1,183 +1,105 @@
 
-# coding: utf-8
+# -*- encoding: utf-8 -*-
 
-import os
 
-import requests
+import os, inspect
 
-import subprocess
+from requests import get
 
-from json import loads
+from subprocess import Popen
 
-from bs4 import BeautifulSoup
+from time import sleep
 
 
-colours = { 'red': '\033[31m', 'blue': '\033[34m', 'blank': '\033[37m' }
+def screen(): return os.system('clear')
 
 
-def info () :
+class Coub:
 
-    info_n = input ( '\n\n\tNome do arquivo : ' )
+    def __init__(self, url: str) -> None:
 
-    info_e = input ( '\n\tExtensão do arquivo : ' )
+        self.__url = url
 
-    info_u = input ( '\n\tUrl : ' )
+        self.__id = self.__url[21:] if self.__url.startswith(
+            'http://') else self.__url[14:]
 
-    return [ info_n, info_u, info_e ]
+        self.__arch = get('http://coub.com/api/v2/coubs/' + self.__id).json()
 
+        self.__data = [self.__arch['title'], self.__arch['audio_file_url']]
 
-def clear () :
+        if self.__arch['media_blocks']['external_raw_videos']:
 
-    os.system ( 'cls' if os.name == 'nt' else 'clear' )
+            self.__data.append(
+                self.__arch['media_blocks']['external_raw_videos'])
 
+        else:
 
-class Archive :
+            screen()
 
-    def download ( self, name = None, url = None, ext = None ) :
+            print('\n{0}Error{1} - It\'s not possible to download this coub\n'.format('\033[31m', '\033[37m'))
 
-        self.__name = name
+            exit(1)
 
-        self.__url = url if url.startswith ( 'https://' ) or url.startswith ( 'http://' ) else 'http://' + url
+        self.cb()
 
-        self.__ext = ext if ext.startswith ( '.' ) else '.' + ext
+    def download(self, name: str, url: str, extension: str) -> None:
 
-        request = requests.get ( self.__url )
+        self.__name=name
 
-        with open ( self.__name + self.__ext, 'wb' ) as archive :
+        self.__url=url if url.startswith('http://') else 'http://' + url
 
-            for chunk in request.iter_content ( chunk_size = 255 ) :
+        self.__extension=extension if extension.startswith(
+            '.') else '.' + extension
 
-                if chunk :
-                    archive.write ( chunk )
+        with open(self.__name + self.__extension, 'wb') as archive:
 
-        print ( '\n\n\t{1}Done{2} - {0}\n'.format ( name, colours['red'], colours['blank'] ) )
+            for chunk in get(self.__url).iter_content(chunk_size = 255):
 
-    def combine ( self, vn, vu, ve, an, au, ae, fn, fe ) :
+                if chunk:
+                    archive.write(chunk)
 
-        print ( '\nLoading {0}...{1}\n'.format ( colours['blue'], colours['blank'] ) )
+    def cb(self) -> None:
 
-        self.download ( vn, vu, ve )
+        self.download('Audio', self.__data[1], 'mp3')
 
-        self.download ( an, au, ae )
+        for item in self.__data[2]:
 
-        self.__comand = 'ffmpeg -i {0}.{1} -i {2}.{3} -c:v copy -c:a aac -map 0:0 -map 1:0 -shortest {4}.{5}'.format ( vn, ve, an, ae, fn, fe )
+            self.download('Gif' + str(item['id']), item['url'], 'gif')
 
-        subprocess.Popen ( self.__comand.split (' '), shell = False )
+        # ffmpeg -i Video.mp4 -i Audio.mp3 -c:v copy -c:a aac -map 0:0 -map 1:0 -shortest Coub.mp4'
 
-        print ( '\n\nFile :\n\n\t{1}Done{2} - {0}\n'.format ( fn, colours['red'], colours['blank'] ) )
+        sleep(5)
 
-    def coub ( self, cn = None, cu = None, ce = None ) :
+        Popen(['convert {1}/Gif* {1}/Video.mp4 && mencoder {1}/Video.mp4 -audiofile {1}/Audio.mp3 -oac copy -ovc copy -o {0}.mp4'.format(self.__data[0], os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))], shell = True)
 
-        self.__cname = cn
+        sleep(15)
 
-        self.__curl = cu if cu.startswith ( 'https://' ) or cu.startswith ( 'http://' ) else 'http://' + cu
+        Popen(['rm -rf Gif* Video.mp4 Audio.mp3'], shell=True)
 
-        self.__cext = ce
+        screen()
 
-        # -
 
-        self.__coub = requests.get ( self.__curl ).text
+if __name__ == '__main__':
 
-        self.__soup = BeautifulSoup ( self.__coub, 'html.parser' )
-        
-        self.__soup = str ( self.__soup.find ( id = 'coubPageCoubJson' ) ) [47:-9]
+    screen()
 
-        self.__soup = loads ( self.__soup )
+    user = ''
 
-        # -
+    while True:
 
-        self.__mp4 = str ( self.__soup['file_versions']['html5']['video']['med']['url'][2:] )
+        user=input('\nPlease enter with a {0}coub{1} url : '.format(
+            '\033[34m', '\033[37m'))
 
-        self.__mp3 = str ( self.__soup['file_versions']['html5']['audio']['med']['url'] )
+        if user.startswith('http://coub.com/view/') or user.startswith('coub.com/view/'):
 
-        self.combine ( 'Video', self.__mp4, 'mp4', 'Audio', self.__mp3, 'mp3', self.__cname, self.__cext )
+            break
 
+        else:
 
-Panload = Archive ()
+            screen()
 
+            print('\n{0}Invalid{1} url {0}!{1}'.format('\033[31m','\033[37m'))
 
-choose = '0'
+    print('\n{0}Connecting{1} ...\n'.format('\033[32m','\033[37m'))
 
-off = [ '00000000', '0', 'Zero', 'zero' ]
-
-if __name__ == '__main__' :
-
-    while True :
-
-        clear ();
-
-        print ( '\nMenu :\n\n\t1 - Download\n\n\t2 - Concatenação\n\n\t3 - Download Coub\n' )
-
-        choose = input ( 'Escolha : ' )
-
-        if choose in off :
-
-            clear ()
-
-            exit ( 0 )
-
-        elif choose == '1' :
-
-            clear ();
-
-            print ( '\nDown :')
-
-            bank = info ()
-
-            Panload.download ( * bank )
-
-        elif choose == '2' :
-
-            clear ();
-
-            print ( '\nUnião : ' )
-
-            vn = input ( '\n\n\tNome para o vídeo : ' )
-
-            vu = input ( '\n\n\tUrl : ' )
-
-            ve = input ( '\n\n\tExtensão do vídeo : ' )
-
-            clear ();
-
-            print ( '\nUnião : ' )
-
-            an  = input ( '\n\n\tNome para o áudio : ' )
-
-            au = input ( '\n\n\tUrl : ' )
-
-            ae = input ( '\n\n\tExtensão áudio : ' )
-
-            clear ();
-
-            print ( '\nUnião : ' )
-
-            fn = input ( '\n\n\tNome para o arquivo convertido : ' )
-
-            fe = input ( '\n\n\tExtensão para o arquivo convertido : ' )
-
-            clear ()
-
-            Panload.combine ( vn, vu, ve, an, au, ae, fn, fe )
-
-        elif choose == '3' :
-
-            clear ()
-
-            print ( '\nCoub : ' )
-
-            bank_coub = info ()
-
-            Panload.coub ( * bank_coub )
-
-        else :
-
-            print ( '\nOpção invalida' )
-
-        out = input ( '\nZero para sair, outro digito para continuar : ' )
-
-        if out in off :
-
-            clear ()
-
-            exit ( 0 )
+    Coub(user)
