@@ -1,9 +1,7 @@
 
-Panload
+#### Panload
 
-![Panload](http://i.imgur.com/oirUiHl.png "Panload")
-
-Aplicação Cli em Python 3 que realiza o download de vídeos do [Coub](http://coub.com/explore/hot).
+:rabbit: Download coub videos
 
 #### Dependências
 
@@ -19,8 +17,6 @@ Aplicação Cli em Python 3 que realiza o download de vídeos do [Coub](http://c
 
 É recomendado instalar o [FFmpeg](https://ffmpeg.org/) caso você deseje concatenar um vídeo a um áudio, o mesmo tem um guia de instalação para Mac, Windows & Linux nesta página **[aqui](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)**
 
-> Player : [Vlc Player](http://www.videolan.org/)
-
 #### Execução
 
 > pip3 install requests subprocess & apt install mencoder
@@ -29,4 +25,4 @@ Aplicação Cli em Python 3 que realiza o download de vídeos do [Coub](http://c
 
 #### Feature
 
-Criar sessão
+1. Criar sessão
